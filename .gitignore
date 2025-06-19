@@ -1,17 +1,11 @@
-# Python
-__pycache__/
-*.pyc
+# IDE / editor crap
+.vscode/
+.idea/
+
+# Python virtual-envs
+.venv/
+env/
+venv/
 
 # Jupyter
-.ipynb_checkpoints/
-
-# OS
-.DS_Store
-
-# Data files
-*.csv
-data/
-
-# Virtual environments
-venv/
-.env.DS_Store
+*.ipynb_checkpoints/
