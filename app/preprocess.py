@@ -1,97 +1,73 @@
-"""
-preprocess.py – Tiny helper to tidy sales CSVs.
+"""preprocess.py – Simple helpers to clean messy sales data
 
-Goal:
-Find the date column  → call it 'ds'
-Find the sales column → call it 'y'
-Drop everything else, give back clean df + quick stats
+This script:
+1. Finds the date and sales columns in a messy CSV or DataFrame
+2. Cleans it into a tidy 2‑column format:  'ds' (date),  'y' (sales)
+3. Returns quick summary stats for the UI
 
-Only needs pandas.
+Dependency footprint: **just pandas**.
 """
 
 from typing import Dict, Sequence, Tuple, Union
 
-import os
 import pandas as pd
 from pandas import DataFrame
 
 __all__ = ["clean_data", "diagnose_dataset"]
 
-# ─────────────────────────────────────────────────────────────
-# Little detectors
-# ─────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Helpers
+# ──────────────────────────────────────────────────────────────────────────────
 
 def _auto_col(df: DataFrame, keys: Sequence[str]) -> str:
-    """First column whose name contains any keyword (case-insensitive)."""
+    """Return the first column whose name contains one of *keys* (case‑insensitive)."""
     for col in df.columns:
         if any(k in col.lower() for k in keys):
             return col
     return ""
 
-
-def _is_date(col: pd.Series) -> bool:
-    """Does this column look like real dates?"""
-    parsed = pd.to_datetime(col, errors="coerce")
-    return parsed.notna().mean() > 0.8 and parsed.nunique() > 1
-
-
-def _is_number(col: pd.Series) -> bool:
-    """Does this column look like positive numbers (prices, totals…)?"""
-    nums = pd.to_numeric(col.astype(str).str.replace(r"[,$]", "", regex=True), errors="coerce")
-    return nums.notna().mean() > 0.6 and nums.mean() > 0
-
-
-# ─────────────────────────────────────────────────────────────
-# Main cleaner
-# ─────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
+# Core cleaning logic
+# ──────────────────────────────────────────────────────────────────────────────
 
 def clean_data(
     data: Union[str, bytes, DataFrame],
     *,
-    date_keys: Tuple[str, ...] = ("date", "day", "time", "timestamp"),
+    date_keys: Tuple[str, ...] = ("date", "order", "day", "time", "timestamp"),
     amount_keys: Tuple[str, ...] = ("total", "sale", "amount", "revenue", "price"),
 ) -> DataFrame:
-    """
-    Return a 2-column DataFrame:
-    ▸ **ds** → datetime
-    ▸ **y**  → float (sales)
-    """
+    """Return a tidy dataframe with columns **ds** (datetime) and **y** (float)."""
 
-    # 1) Load ---------------------------------------------------------------
-    if isinstance(data, (str, bytes)):
-        df = pd.read_csv(os.path.expanduser(data))
-    else:
-        df = data.copy(deep=True)
-
+    # ── 1 · Load --------------------------------------------------------------
+    df = pd.read_csv(data) if isinstance(data, (str, bytes)) else data.copy()
     df.columns = [str(c).strip().lower() for c in df.columns]
 
-    # 2) Guess columns -------------------------------------------------------
+    # ── 2 · Identify columns --------------------------------------------------
     date_col = _auto_col(df, date_keys)
     amount_col = _auto_col(df, amount_keys)
 
-    # Validate guesses; if bad, ignore so fallback can try again
-    if date_col and not _is_date(df[date_col]):
-        date_col = ""
-    if amount_col and not _is_number(df[amount_col]):
-        amount_col = ""
-
-    # Fallback search --------------------------------------------------------
+    # Fallback: heuristics only if name matching failed
     if not date_col:
-        for col in df.columns:
-            if _is_date(df[col]):
+        # Prefer object / string columns; numeric columns are seldom dates
+        for col in df.select_dtypes(include="object").columns:
+            parsed = pd.to_datetime(df[col], errors="coerce")
+            if parsed.notna().mean() > 0.9 and parsed.dt.normalize().nunique() > 1:
                 date_col = col
                 break
 
     if not amount_col:
-        for col in df.columns:
-            if _is_number(df[col]):
+        for col in df.columns:  # any dtype
+            nums = pd.to_numeric(
+                df[col].astype(str).str.replace(r"[,$]", "", regex=True), errors="coerce"
+            )
+            if nums.notna().mean() > 0.5 and nums.mean() > 0:
                 amount_col = col
                 break
 
     if not date_col or not amount_col:
-        raise ValueError("Could not find both a valid date column and a sales column.")
+        raise ValueError("Could not find both a date column and a sales column.")
 
-    # 3) Build tidy frame ----------------------------------------------------
+    # ── 3 · Build tidy frame --------------------------------------------------
     clean_df = pd.DataFrame(
         {
             "ds": pd.to_datetime(df[date_col], errors="coerce"),
@@ -100,36 +76,37 @@ def clean_data(
                 errors="coerce",
             ),
         }
-    ).dropna().sort_values("ds").reset_index(drop=True)
+    )
 
+    clean_df = clean_df.dropna().sort_values("ds").reset_index(drop=True)
     if clean_df.empty:
         raise ValueError("No valid rows after cleaning.")
 
     return clean_df
 
-# Quick stats for dashboards
+# ──────────────────────────────────────────────────────────────────────────────
+# Diagnostics
+# ──────────────────────────────────────────────────────────────────────────────
+
 def diagnose_dataset(df: DataFrame) -> Dict[str, Union[int, float, str]]:
+    """Return basic stats for dashboard display."""
     if {"ds", "y"} - set(df.columns):
-        raise ValueError("Need 'ds' and 'y' columns first.")
+        raise ValueError("Data must have 'ds' and 'y' columns.")
 
-    start = df["ds"].min()
-    end = df["ds"].max()
-    days_span = (end - start).days + 1  # inclusive
     gaps = df["ds"].diff().dt.days.gt(1).sum()
-
     return {
-        "rows": int(len(df)),
-        "date_start": start.strftime("%Y-%m-%d"),
-        "date_end": end.strftime("%Y-%m-%d"),
-        "num_days": int(days_span),
+        "rows": len(df),
+        "date_start": df["ds"].min().strftime("%Y-%m-%d"),
+        "date_end": df["ds"].max().strftime("%Y-%m-%d"),
         "avg_sales": float(df["y"].mean()),
         "median_sales": float(df["y"].median()),
-        "missing_gaps": int(gaps),
+        "missing_date_gaps": int(gaps),
     }
 
-# Testing Block
+# ──────────────────────────────────────────────────────────────────────────────
+# Minimal self‑test
+# ──────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    sample = "data/preprocesstester.csv"
-    tidy = clean_data(sample)
-    print(tidy.head(), "\n")
-    print(diagnose_dataset(tidy))
+    df = clean_data("data/preProcessTester.csv")
+    print(df.head(), "\n")
+    print(diagnose_dataset(df))

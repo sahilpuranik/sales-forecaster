@@ -1,62 +1,46 @@
-OrderID,CustomerName,ProductName,Quantity,Price,OrderDate
-1001,John Doe,Steelman Wrench,2,19.99,2025-06-01
-1002,Jane Smith,Steelman Hammer,1,24.99,2025-06-02
-1003,Emily Davis,Steelman Screwdriver Set,3,34.99,2025-06-03
-1004,Michael Brown,Steelman Pliers,1,14.99,2025-06-04
-1005,Sarah Wilson,Steelman Drill,2,89.99,2025-06-05
-1006,Chris Johnson,Steelman Saw,1,49.99,2025-06-06
-1007,Patricia Garcia,Steelman Wrench,4,19.99,2025-06-07
-1008,Robert Martinez,Steelman Hammer,2,24.99,2025-06-08
-1009,Linda Hernandez,Steelman Screwdriver Set,1,34.99,2025-06-09
-1010,James Lopez,Steelman Drill,3,89.99,2025-06-10
-1011,Barbara Clark,Steelman Saw,2,49.99,2025-06-11
-1012,Paul Lewis,Steelman Pliers,3,14.99,2025-06-12
-1013,Nancy Walker,Steelman Wrench,1,19.99,2025-06-13
-1014,Kevin Hall,Steelman Hammer,2,24.99,2025-06-14
-1015,Laura Allen,Steelman Screwdriver Set,4,34.99,2025-06-15
-1016,Steven Young,Steelman Drill,1,89.99,2025-06-16
-1017,Betty King,Steelman Saw,3,49.99,2025-06-17
-1018,Mark Wright,Steelman Pliers,2,14.99,2025-06-18
-1019,Donna Scott,Steelman Wrench,5,19.99,2025-06-19
-1020,George Green,Steelman Hammer,1,24.99,2025-06-20
-1021,Karen Adams,Steelman Screwdriver Set,2,34.99,2025-06-21
-1022,Edward Baker,Steelman Drill,4,89.99,2025-06-22
-1023,Dorothy Nelson,Steelman Saw,1,49.99,2025-06-23
-1024,Brian Carter,Steelman Pliers,3,14.99,2025-06-24
-1025,Susan Mitchell,Steelman Wrench,2,19.99,2025-06-25
-1026,Anthony Perez,Steelman Hammer,4,24.99,2025-06-26
-1027,Jessica Roberts,Steelman Screwdriver Set,1,34.99,2025-06-27
-1028,Charles Turner,Steelman Drill,3,89.99,2025-06-28
-1029,Angela Phillips,Steelman Saw,2,49.99,2025-06-29
-1030,Matthew Campbell,Steelman Pliers,1,14.99,2025-06-30
-1031,Rebecca Parker,Steelman Wrench,3,19.99,2025-07-01
-1032,Joshua Evans,Steelman Hammer,2,24.99,2025-07-02
-1033,Shirley Edwards,Steelman Screwdriver Set,4,34.99,2025-07-03
-1034,Frank Collins,Steelman Drill,1,89.99,2025-07-04
-1035,Deborah Stewart,Steelman Saw,3,49.99,2025-07-05
-1036,Raymond Morris,Steelman Pliers,2,14.99,2025-07-06
-1037,Carol Rogers,Steelman Wrench,5,19.99,2025-07-07
-1038,Patrick Reed,Steelman Hammer,1,24.99,2025-07-08
-1039,Janet Cook,Steelman Screwdriver Set,2,34.99,2025-07-09
-1040,Jack Morgan,Steelman Drill,4,89.99,2025-07-10
-1041,Emma Bell,Steelman Saw,1,49.99,2025-07-11
-1042,Henry Murphy,Steelman Pliers,3,14.99,2025-07-12
-1043,Virginia Bailey,Steelman Wrench,2,19.99,2025-07-13
-1044,Alexander Rivera,Steelman Hammer,4,24.99,2025-07-14
-1045,Melissa Cooper,Steelman Screwdriver Set,1,34.99,2025-07-15
-1046,Eric Richardson,Steelman Drill,3,89.99,2025-07-16
-1047,Amy Cox,Steelman Saw,2,49.99,2025-07-17
-1048,Gregory Howard,Steelman Pliers,1,14.99,2025-07-18
-1049,Stephanie Ward,Steelman Wrench,3,19.99,2025-07-19
-1050,Scott Torres,Steelman Hammer,2,24.99,2025-07-20
-1051,Christine Peterson,Steelman Screwdriver Set,4,34.99,2025-07-21
-1052,Andrew Gray,Steelman Drill,1,89.99,2025-07-22
-1053,Teresa Ramirez,Steelman Saw,3,49.99,2025-07-23
-1054,Jason James,Steelman Pliers,2,14.99,2025-07-24
-1055,Diane Watson,Steelman Wrench,5,19.99,2025-07-25
-1056,Adam Brooks,Steelman Hammer,1,24.99,2025-07-26
-1057,Julie Kelly,Steelman Screwdriver Set,2,34.99,2025-07-27
-1058,Peter Sanders,Steelman Drill,4,89.99,2025-07-28
-1059,Heather Price,Steelman Saw,1,49.99,2025-07-29
-1060,Samuel Bennett,Steelman Pliers,3,14.99,2025-07-30
-1070,Victoria Wood,Steelman Wrench,2,19.99,2025-07-31
+Order ID,Customer Name,Customer Email,Order Date,Product Name,Product ID,Quantity,Price,Discount Code,Discount Amount,Tax Amount,Shipping Cost,Total Amount,Currency,Payment Status,Shipping Status,Order Notes,Shipping Address,Refund Status,Refund Amount
+1001,Jennifer Delgado,natashamatthews@crosby.com,2024-07-16,T-Shirt,TS001,3,25.00,SUMMER10,7.50,5.40,3.52,76.42,USD,Paid,Processing,Edge who same ready.,USS Lopez FPO AE 74790,Yes,15.00
+1002,Garrett Gilbert,jcarter@hotmail.com,2024-07-31,Socks,SK007,1,10.00,SUMMER10,1.00,0.72,0.85,10.57,USD,Paid,Delivered,National hear product sure teacher brother.,"1744 Campbell Key Suite 894 North Ashley, OR 74960",No,0.00
+1003,Donna Frey,gibbskatherine@king.com,2025-06-13,T-Shirt,TS001,1,25.00,SUMMER10,2.50,1.80,0.69,24.99,USD,Paid,Processing,Control short career.,"3179 Powell Roads Sarahbury, NE 38726",Yes,15.00
+1004,Cody Guerrero,tonya92@gmail.com,2024-08-17,Jeans,JN006,2,60.00,NEWYEAR10,12.00,8.64,5.87,122.51,USD,Paid,Delivered,Top believe top.,"64405 Robertson Pine Apt. 443 New Autumnborough, NV 43690",No,0.00
+1005,Jill Robinson,eparrish@hotmail.com,2025-02-02,Jeans,JN006,1,60.00,,0.00,4.80,4.23,69.03,USD,Paid,Processing,About big hospital paper.,"PSC 7650, Box 7459 APO AA 06883",No,0.00
+1006,Susan Koch,wmason@hotmail.com,2025-04-17,Backpack,BP004,1,39.99,WINTER15,6.00,2.72,0.59,37.30,USD,Paid,Delivered,Able president scientist share win similar key.,Unit 2238 Box 3558 DPO AP 82312,Yes,15.00
+1007,Darren Brown,christina98@gmail.com,2025-06-09,Socks,SK007,1,10.00,SUMMER10,1.00,0.72,1.63,11.35,USD,Paid,Shipped,Find order brother method baby.,"05734 Carter Fords Suite 270 Andreastad, WV 04041",No,0.00
+1008,Jennifer Gonzales,ramirezrachel@gmail.com,2025-02-06,Hat,HT005,2,20.00,NEWYEAR10,4.00,2.88,0.82,39.70,USD,Paid,Delivered,Third quality friend.,"0886 Cory Meadows Kimborough, SC 71755",Yes,15.00
+1009,Raymond Black,smithjenny@hotmail.com,2025-02-21,Hoodie,HD002,2,45.00,WINTER15,13.50,6.12,1.44,84.06,USD,Paid,Shipped,Try create take several good Congress.,"14606 Jason Pass Danielstad, CO 04507",No,0.00
+1010,Michael Barr,bushkevin@jackson.info,2024-12-01,Hoodie,HD002,3,45.00,WINTER15,20.25,9.18,3.58,127.51,USD,Paid,Shipped,Feel get our morning truth.,"719 Joseph Forks Lake Ann, MD 91521",No,0.00
+1011,Krystal Escobar,gainesaaron@shelton-allen.com,2024-07-09,Hoodie,HD002,3,45.00,WINTER15,20.25,9.18,4.64,128.57,USD,Paid,Delivered,Sign million owner north.,"0935 Derrick Well Robertsberg, SC 66582",No,0.00
+1012,Tanya Maldonado,reginarogers@yahoo.com,2024-06-26,Jeans,JN006,2,60.00,,0.00,9.60,1.01,130.61,USD,Paid,Shipped,Check artist believe rest feel.,"701 Allen Crescent Suite 041 Lake Juan, TX 65144",Yes,15.00
+1013,Dakota Poole,james25@reese-thornton.com,2024-08-02,Jeans,JN006,2,60.00,NEWYEAR10,12.00,8.64,5.81,122.45,USD,Paid,Shipped,Child indicate among energy.,"5918 Joyce Junctions Leebury, OK 79921",No,0.00
+1014,Susan Hunter,davidhill@chavez.com,2025-04-17,Hoodie,HD002,3,45.00,,0.00,10.80,0.06,145.86,USD,Paid,Shipped,Economy heart husband.,"0659 Lisa Garden Lake Claudiahaven, WY 28675",Yes,15.00
+1015,Elizabeth Taylor,thill@harris.com,2024-07-01,Backpack,BP004,3,39.99,NEWYEAR10,12.00,8.64,4.88,121.49,USD,Paid,Processing,Although stay book data face condition.,"240 Zachary Parkways Suite 913 West Crystalberg, WV 45632",Yes,15.00
+1016,Matthew Ryan,melissa14@cantrell-shepherd.com,2024-06-22,Hoodie,HD002,3,45.00,,0.00,10.80,2.11,147.91,USD,Paid,Shipped,Site finish start fact debate.,"0039 Kelly Road Apt. 405 South Tonyport, MO 96474",Yes,15.00
+1017,Jessica Patterson,victoriachoi@fox-mcdonald.com,2024-12-07,Hoodie,HD002,3,45.00,NEWYEAR10,13.50,9.72,5.90,137.12,USD,Paid,Shipped,Prevent personal according section.,"05634 Jefferson Trace Suite 391 Riceville, NJ 90246",Yes,15.00
+1018,Linda Raymond,vfisher@hotmail.com,2025-04-08,T-Shirt,TS001,2,25.00,SUMMER10,5.00,3.60,1.08,49.68,USD,Paid,Delivered,Huge eat two avoid.,"818 Frank Avenue Brianborough, OR 18618",Yes,15.00
+1019,Jessica Gonzalez,danielnolan@hotmail.com,2024-06-28,Socks,SK007,2,10.00,SUMMER10,2.00,1.44,0.32,19.76,USD,Paid,Processing,Friend change just.,"4818 Christina Shoals Apt. 740 South Rebecca, WV 90563",No,0.00
+1020,Randy Kane,colleen83@stein-brooks.com,2025-02-17,Hoodie,HD002,1,45.00,SUMMER10,4.50,3.24,2.90,46.64,USD,Paid,Shipped,Father president wind how commercial.,"0058 Rodriguez Plaza Apt. 130 East Williamshire, NY 49606",Yes,15.00
+1021,Julian Henry,michaelsanders@manning.com,2025-05-27,Backpack,BP004,1,39.99,,0.00,3.20,2.00,45.19,USD,Paid,Shipped,Experience hope myself determine begin.,"530 Johnson Vista Suite 089 Gentryfurt, AZ 45885",No,0.00
+1022,Edward George,glowe@vance-edwards.com,2024-12-24,Hoodie,HD002,3,45.00,SUMMER10,13.50,9.72,3.75,134.97,USD,Paid,Shipped,Son without course.,"9921 William Mountains Riversshire, VA 45368",No,0.00
+1023,Grace Erickson,john33@robbins-montgomery.org,2025-01-12,Hat,HT005,1,20.00,NEWYEAR10,2.00,1.44,1.99,21.43,USD,Paid,Delivered,Trouble ability outside alone season.,"211 Gonzalez Orchard Apt. 697 West Vincentfurt, NJ 61052",No,0.00
+1024,Anthony Thompson Jr.,ecox@hotmail.com,2025-05-02,Socks,SK007,1,10.00,,0.00,0.80,3.72,14.52,USD,Paid,Delivered,Current common hit five.,"37769 Lisa Loaf Apt. 720 New Christinafort, MT 30355",No,0.00
+1025,Shannon Stafford,smora@hotmail.com,2025-04-11,Backpack,BP004,2,39.99,NEWYEAR10,8.00,5.76,0.57,78.31,USD,Paid,Shipped,Technology floor get resource.,"5666 Peterson Isle Apt. 404 Smithbury, PA 91350",No,0.00
+1026,Kimberly Davis,vduncan@yahoo.com,2025-02-27,Sneakers,SN003,2,75.00,,0.00,12.00,2.39,164.39,USD,Paid,Delivered,Leave per occur these early its.,"6825 Thomas Rapids Apt. 490 South Nicholas, IN 23482",No,0.00
+1027,Monique Martinez,cmyers@hotmail.com,2024-08-18,Sneakers,SN003,3,75.00,WINTER15,33.75,15.30,4.75,211.30,USD,Paid,Processing,Clear decade learn he present must.,"629 Long Place Apt. 116 Moranton, WY 93021",Yes,15.00
+1028,Jennifer Baldwin,xdiaz@smith.biz,2024-12-12,Sneakers,SN003,1,75.00,WINTER15,11.25,5.10,1.99,70.84,USD,Paid,Shipped,Because reduce office force audience owner.,"38166 Alison Prairie Port Rebecca, OR 60179",Yes,15.00
+1029,Elaine Moses,xjenkins@yahoo.com,2024-10-15,Sneakers,SN003,3,75.00,NEWYEAR10,22.50,16.20,4.17,222.87,USD,Paid,Processing,Hotel compare difficult say.,"28861 Devon Village North Stephen, CA 38858",No,0.00
+1030,Vanessa Martin,lopezamy@kennedy.com,2025-05-21,Sneakers,SN003,3,75.00,,0.00,18.00,5.62,248.62,USD,Paid,Delivered,Use around factor stuff much.,"PSC 3973, Box 9824 APO AP 62225",No,0.00
+1031,Steven Rocha,kimberly69@gmail.com,2024-11-03,Sneakers,SN003,1,75.00,NEWYEAR10,7.50,5.40,4.66,77.56,USD,Paid,Delivered,Little water several age.,"PSC 6411, Box 0098 APO AA 17402",Yes,15.00
+1032,Judith Hall,aanderson@brock-collins.biz,2024-07-10,Socks,SK007,3,10.00,SUMMER10,3.00,2.16,0.23,29.39,USD,Paid,Shipped,Mean third better tough magazine.,"9548 David Mountain Suite 787 Nunezborough, ID 51131",No,0.00
+1033,Kristen Shaw,sheilamartin@yahoo.com,2024-11-22,Sneakers,SN003,2,75.00,NEWYEAR10,15.00,10.80,0.08,145.88,USD,Paid,Shipped,Short upon morning entire week.,USS Hardin FPO AA 83146,No,0.00
+1034,Ryan Lyons,omurray@gmail.com,2025-02-11,Backpack,BP004,2,39.99,,0.00,6.40,2.27,88.65,USD,Paid,Processing,Nation worry hit make everything.,"9516 Frazier Knolls North Josephberg, MO 66797",Yes,15.00
+1035,Christina Bishop,wanda53@gmail.com,2024-11-21,Sneakers,SN003,3,75.00,WINTER15,33.75,15.30,4.89,211.44,USD,Paid,Delivered,Receive risk industry strategy common clear.,"PSC 1037, Box 8390 APO AA 77033",No,0.00
+1036,Michael Mason,jramirez@yahoo.com,2024-12-22,T-Shirt,TS001,2,25.00,NEWYEAR10,5.00,3.60,5.07,53.67,USD,Paid,Delivered,Still view month audience care land.,"30015 Garcia Freeway Lake Brian, AR 01193",Yes,15.00
+1037,Kelly Owens,david76@yahoo.com,2024-09-01,Backpack,BP004,2,39.99,SUMMER10,8.00,5.76,0.82,78.56,USD,Paid,Delivered,Challenge data system.,"06236 Malone Springs Hernandezside, AR 21077",No,0.00
+1038,Samantha Koch,jeffreygonzalez@garcia.com,2025-03-01,Jeans,JN006,2,60.00,WINTER15,18.00,8.16,4.70,114.86,USD,Paid,Shipped,View believe hotel start practice black structure.,"6580 Parker Prairie East Kristin, WA 17091",Yes,15.00
+1039,Elizabeth Lopez,jeremyholland@hobbs-ferguson.info,2025-06-06,Jeans,JN006,2,60.00,SUMMER10,12.00,8.64,0.26,116.90,USD,Paid,Shipped,Yourself table generation condition stop add.,"016 Bennett Wells Lake Rachelchester, PA 93734",Yes,15.00
+1040,Allison Bowen,roy48@yahoo.com,2024-08-26,Backpack,BP004,1,39.99,WINTER15,6.00,2.72,0.14,36.85,USD,Paid,Delivered,Again specific at.,"7272 Joshua Springs South Debra, MA 36606",No,0.00
+1041,Christine Frazier,rebecca33@hotmail.com,2024-11-24,Sneakers,SN003,1,75.00,NEWYEAR10,7.50,5.40,2.35,75.25,USD,Paid,Delivered,Investment start continue necessary argue.,"PSC 7374, Box 1533 APO AA 52618",Yes,15.00
+1042,Donald Clark,elijah70@harrell.com,2024-07-20,Hat,HT005,2,20.00,NEWYEAR10,4.00,2.88,0.73,39.61,USD,Paid,Shipped,System hair clear less official upon.,"326 Kimberly Road Suite 253 North Paulfort, NE 53988",No,0.00
+1043,Andrew Brooks,danielslynn@nichols-miller.info,2024-12-12,T-Shirt,TS001,2,25.00,SUMMER10,5.00,3.60,0.70,49.30,USD,Paid,Delivered,Trade increase old.,"87467 Shane Overpass North Jeffrey, KS 35775",Yes,15.00
+1044,Alan Hall,bradley44@thompson.com,2025-02-17,Sneakers,SN003,1,75.00,WINTER15,11.25,5.10,5.15,74.00,USD,Paid,Shipped,Minute great sea civil development.,"531 Jackson Neck Port Peterburgh, NM 48999",No,0.00
+1045,Timothy Smith,coxalexa@gmail.com,2025-03-06,Jeans,JN006,2,60.00,WINTER15,18.00,8.16,2.49,112.65,USD,Paid,Shipped,Against budget tonight food outside common.,"67939 Cook Lights Port Brendaland, MD 62421",Yes,15.00

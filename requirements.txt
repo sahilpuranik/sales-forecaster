@@ -1,20 +1,24 @@
-# ── Core
-numpy==1.26.4
-pandas==1.5.3
+# -----------------------------------------------------------------------------
+# Sales Forecaster – stable wheel stack (tested on Python 3.10.13 & 3.11.x)
+# -----------------------------------------------------------------------------
 
-# ── UI & Visualization
+# --- Core --------------------------------------------------------------------
+numpy==1.26.4
+pandas==1.5.3            # Prophet 1.1.x still needs pandas<2
+
+# --- UI & visualisation ------------------------------------------------------
 streamlit==1.37.1
 plotly==5.21.0
-matplotlib==3.9.0
-kaleido==0.2.1
+matplotlib==3.9.0        # 3.9 wheels exist for Py≤3.11 on macOS ARM
+kaleido==0.2.1           # static image export for Plotly
 
-# ── Forecasting
-prophet==1.1.6
+# --- Forecasting & ML --------------------------------------------------------
+prophet==1.1.6           # wheels for Py≤3.11
 scikit-learn==1.3.2
-tensorflow==2.16.1
-scipy==1.11.4          # optional, but recommended
+tensorflow==2.16.1       # CPU wheel; works with NumPy 1.26
+scipy==1.11.4
 
-# ── Dev / Testing
-pytest>=8.2
+# --- Dev / test --------------------------------------------------------------
+pytest==8.2.0
 black==24.4.2
 ruff==0.4.5

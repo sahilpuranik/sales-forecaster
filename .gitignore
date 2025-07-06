@@ -1,31 +1,8 @@
-<<<<<<< HEAD
-# IDE / editor crap
-.vscode/
-.idea/
-
-# Python virtual-envs
-.venv/
-env/
+# .gitignore
 venv/
-
-# Jupyter
-*.ipynb_checkpoints/
-=======
-# Python
-__pycache__/
 *.pyc
-
-# Jupyter
-.ipynb_checkpoints/
-
-# OS
-.DS_Store
-
-# Data files
-*.csv
-data/
-
-# Virtual environments
-venv/
-.env.DS_Store
->>>>>>> 5a76d613 (Remove .DS_Store and add to .gitignore)
+__pycache__/
+.env
+.DS_Store.venv/
+.venv/
+.venv/
