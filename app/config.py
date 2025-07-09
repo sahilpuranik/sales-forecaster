@@ -1,7 +1,6 @@
 """
 config.py
 A tiny file that just holds settings.
-You will IMPORT these constants from other files.
 """
 
 # Absolute minimum to even attempt forecasting

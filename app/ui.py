@@ -4,7 +4,7 @@ import pandas as pd
 
 from preprocess import clean_data, diagnose_dataset
 
-st.title("📈 Sales Forecaster – Week-1 Demo")
+st.title("Sales Forecaster – Week-1 Demo")
 
 # ── upload widget ──
 file = st.sidebar.file_uploader("Upload CSV with a date & sales column")
@@ -23,4 +23,4 @@ if file:
 
     # TODO: add a nice error-warning box if clean_data raises ValueError
 else:
-    st.info("👈 Upload a file to start")
+    st.info("Upload a file to start")

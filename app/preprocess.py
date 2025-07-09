@@ -15,10 +15,7 @@ from pandas import DataFrame
 
 __all__ = ["clean_data", "diagnose_dataset"]
 
-# ──────────────────────────────────────────────────────────────────────────────
 # Helpers
-# ──────────────────────────────────────────────────────────────────────────────
-
 def _auto_col(df: DataFrame, keys: Sequence[str]) -> str:
     """Return the first column whose name contains one of *keys* (case‑insensitive)."""
     for col in df.columns:
@@ -26,10 +23,7 @@ def _auto_col(df: DataFrame, keys: Sequence[str]) -> str:
             return col
     return ""
 
-# ──────────────────────────────────────────────────────────────────────────────
 # Core cleaning logic
-# ──────────────────────────────────────────────────────────────────────────────
-
 def clean_data(
     data: Union[str, bytes, DataFrame],
     *,
@@ -84,10 +78,7 @@ def clean_data(
 
     return clean_df
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Diagnostics
-# ──────────────────────────────────────────────────────────────────────────────
-
+# Diagnostics for model selection + dashboard display
 def diagnose_dataset(df: DataFrame) -> Dict[str, Union[int, float, str]]:
     """Return basic stats for dashboard display."""
     if {"ds", "y"} - set(df.columns):
@@ -103,9 +94,7 @@ def diagnose_dataset(df: DataFrame) -> Dict[str, Union[int, float, str]]:
         "missing_date_gaps": int(gaps),
     }
 
-# ──────────────────────────────────────────────────────────────────────────────
 # Minimal self‑test
-# ──────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     df = clean_data("data/preProcessTester.csv")
     print(df.head(), "\n")
