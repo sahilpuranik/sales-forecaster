@@ -10,7 +10,7 @@ import pandas as pd
 from schemas import ForecastRequestSchema, ForecastResponseSchema
 
 # Forecasting logic
-from DataScience.forecast import run_forecast  # adjust path if needed
+from App.forecast import run_forecast  
 
 # Blueprint
 blp = Blueprint(

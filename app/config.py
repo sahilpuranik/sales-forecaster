@@ -10,7 +10,7 @@ ABSOLUTE_MIN = 10
 MIN_RELIABLE_ROWS = 30   # below this, confidence bands are hidden
 
 # ── How many rows count as a “small” CSV? ──
-SMALL_MAX = 90           # TODO: experiment later—does 90 still feel right?
+SMALL_MAX = 90           
 
 # Rows that are still OK for Prophet before we jump to LSTM
 MEDIUM_MAX = 730         # about 2 years of daily data
