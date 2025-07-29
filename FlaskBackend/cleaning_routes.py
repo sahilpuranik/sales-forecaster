@@ -1,3 +1,7 @@
+"""
+Blueprint handling the /clean endpoint for CSV file uploads and cleaning.
+"""
+
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from werkzeug.datastructures import FileStorage
@@ -6,8 +10,11 @@ import pandas as pd
 # Schemas
 from schemas import CleanRequestSchema, CleanResponseSchema
 
-# Data-science helper
-from DataScience.preprocess import clean_csv  # adjust import path if needed
+# Data cleaning logic
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from App.preprocess import clean_data
 
 # Blueprint
 blp = Blueprint(
@@ -20,21 +27,25 @@ blp = Blueprint(
 
 @blp.route("/clean", methods=["POST"])
 class CleanResource(MethodView):
-    """POST /clean — upload CSV, return cleaned preview"""
+    """POST /clean – Accepts a raw CSV file, cleans it, and returns preview"""
 
-    @blp.arguments(CleanRequestSchema, location="files")       # validate upload
-    @blp.response(200, CleanResponseSchema(many=True))         # validate output
+    @blp.arguments(CleanRequestSchema, location="files")
+    @blp.response(200, CleanResponseSchema(many=True))
     def post(self, args):
-        file: FileStorage | None = args.get("file")
+        # 1. Extract file from validated args
+        file = args.get("file")
         if file is None:
-            abort(400, message="Missing file field 'file'.")
+            abort(400, message="No file uploaded. Attach it using 'file' field.")
 
+        # 2. Basic file extension check
         if not file.filename.endswith(".csv"):
             abort(400, message="Only .csv files are supported.")
 
+        # 3. Clean the uploaded CSV
         try:
-            df = clean_csv(file)  # returns DataFrame with 'ds' and 'y'
-        except Exception:
-            abort(400, message="Failed to read or clean CSV.")
+            df = clean_data(file)  # Returns cleaned DataFrame with 'ds' and 'y'
+        except Exception as e:
+            abort(400, message=f"Could not process file: {str(e)}")
 
-        return df.head().to_dict(orient="records")
+        # 4. Return first few rows for preview
+        return df.head().to_dict("records")

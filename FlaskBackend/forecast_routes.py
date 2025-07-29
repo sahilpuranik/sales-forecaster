@@ -10,6 +10,9 @@ import pandas as pd
 from schemas import ForecastRequestSchema, ForecastResponseSchema
 
 # Forecasting logic
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from App.forecast import run_forecast  # adjust path if needed
 
 # Blueprint

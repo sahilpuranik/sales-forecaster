@@ -1,28 +1,25 @@
-# -----------------------------------------------------------------------------
-# Sales Forecaster – stable wheel stack (tested on Python 3.10.13 & 3.11.x)
-# -----------------------------------------------------------------------------
 
-# --- Core --------------------------------------------------------------------
+
+# --- Core web ---------------------------------------------------------------
 flask==3.0.3
-flask-smorest==0.44.0
+flask-cors==4.0.0                # simple CORS, lighter than Smorest for now
+flask-smorest==0.42.0            # API documentation and validation
+
+# --- Data wrangling ---------------------------------------------------------
 numpy==1.26.4
-pandas==1.5.3            # Prophet 1.1.x still needs pandas<2
+pandas==1.5.3                    # Prophet 1.1.x requires pandas<2
 
-# --- UI & visualisation ------------------------------------------------------
-streamlit==1.37.1
-plotly==5.21.0
-matplotlib==3.9.0        # 3.9 wheels exist for Py≤3.11 on macOS ARM
-kaleido==0.2.1           # static image export for Plotly
-
-# --- Forecasting & ML --------------------------------------------------------
-prophet==1.1.6           # wheels for Py≤3.11
+# --- Forecasting ------------------------------------------------------------
+prophet==1.1.6                   # pre-built wheels for Py<=3.11
 scikit-learn==1.3.2
-tensorflow==2.16.1       # CPU wheel; works with NumPy 1.26
 scipy==1.11.4
 
-# --- Dev / test --------------------------------------------------------------
+# --- Optional visual / notebook usage --------------------------------------
+plotly==5.21.0
+streamlit==1.37.1
+matplotlib==3.8.4                # last version with wheels on macOS arm64
+
+# --- Dev / test -------------------------------------------------------------
 pytest==8.2.0
 black==24.4.2
 ruff==0.4.5
-
-

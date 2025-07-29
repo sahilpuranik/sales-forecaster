@@ -1,45 +1,20 @@
-from flask.views import MethodView
-from flask_smorest import Blueprint, abort
-from flask import request
-from werkzeug.datastructures import FileStorage
-import pandas as pd
+from marshmallow import Schema, fields, ValidationError
+from flask_smorest import Blueprint
 
-# ── Schemas ────────────────────────────────────────────────────────────────
-from schemas import CleanRequestSchema, CleanResponseSchema
+# Schema for file upload requests
+class CleanRequestSchema(Schema):
+    file = fields.Raw(required=True, description="CSV file to clean")
 
-# ── DataScience Import ─────────────────────────────────────────────────────
-from App.preprocess import clean_csv
+# Schema for cleaned data response
+class CleanResponseSchema(Schema):
+    ds = fields.Date(required=True, description="Date")
+    y = fields.Float(required=True, description="Sales amount")
 
-# ── Blueprint Setup ────────────────────────────────────────────────────────
-blp = Blueprint(
-    "cleaning",
-    __name__,
-    url_prefix="/",
-    description="CSV cleaning endpoint",
-)
+# Schema for forecast requests
+class ForecastRequestSchema(Schema):
+    data = fields.List(fields.Dict(), required=True, description="Cleaned data array")
 
-
-@blp.route("/clean", methods=["POST"])
-class CleanResource(MethodView):
-    """POST /clean – Accepts a raw CSV file, cleans it, and returns preview"""
-
-    @blp.arguments(CleanRequestSchema, location="files")
-    @blp.response(200, CleanResponseSchema(many=True))
-    def post(self, args):
-        # 1. Extract file from validated args
-        file = args.get("file")
-        if file is None:
-            abort(400, message="No file uploaded. Attach it using 'file' field.")
-
-        # 2. Basic file extension check
-        if not file.filename.endswith(".csv"):
-            abort(400, message="Only .csv files are supported.")
-
-        # 3. Clean the uploaded CSV
-        try:
-            df = clean_csv(file)  # Returns cleaned DataFrame with 'ds' and 'y'
-        except Exception:
-            abort(400, message="Could not process file. Ensure it’s a valid CSV.")
-
-        # 4. Return first few rows for preview
-        return df.head().to_dict("records")
+# Schema for forecast response
+class ForecastResponseSchema(Schema):
+    forecast = fields.List(fields.Dict(), required=True, description="Forecast results")
+    low_confidence = fields.Boolean(required=True, description="Whether forecast has low confidence")

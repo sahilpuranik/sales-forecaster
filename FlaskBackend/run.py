@@ -1,6 +1,7 @@
 #Entry point for Flask
 from flask import Flask
 from flask_smorest import Api
+from flask_cors import CORS
 
 from cleaning_routes import blp as cleaning_blp
 from forecast_routes import blp as forecast_blp
@@ -8,6 +9,9 @@ from forecast_routes import blp as forecast_blp
 
 def create_app() -> Flask:
     app = Flask(__name__)
+    
+    # Enable CORS for frontend
+    CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:3000"])
 
     app.config.update(
         SECRET_KEY="dev-only-change-me",

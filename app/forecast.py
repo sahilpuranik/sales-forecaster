@@ -20,8 +20,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 # --- Utils ---
-from utils import select_model
-from config import MIN_RELIABLE_ROWS
+from App.utils import select_model
+from App.config import MIN_RELIABLE_ROWS
 
 # Prophet Forecast – predicts future using seasonality/trends
 def run_prophet(df: DataFrame, periods: int = 30) -> DataFrame:

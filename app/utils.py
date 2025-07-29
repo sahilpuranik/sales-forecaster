@@ -2,7 +2,7 @@ from typing import Literal
 from pandas import DataFrame
 import warnings
 
-from config import ABSOLUTE_MIN, SMALL_MAX
+from App.config import ABSOLUTE_MIN, SMALL_MAX
 
 def detect_seasonality(df: DataFrame, lag: int = 7, threshold: float = 0.3) -> bool:
     # Check if there's a weekly pattern in sales (like spikes every Sunday)
