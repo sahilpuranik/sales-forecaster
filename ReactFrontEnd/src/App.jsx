@@ -47,7 +47,7 @@ export default function App() {
         <div className="mb-12">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full mb-4">
-              <span className="text-2xl">📁</span>
+              <span className="text-lg">📁</span>
             </div>
             <h2 className="text-2xl font-semibold text-gray-900 mb-2">Step 1: Upload Your Data</h2>
             <p className="text-gray-600">
@@ -62,7 +62,7 @@ export default function App() {
           <div className="mb-12">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-full mb-4">
-                <span className="text-2xl">👀</span>
+                <span className="text-lg">👀</span>
               </div>
               <h2 className="text-2xl font-semibold text-gray-900 mb-2">Step 2: Review Your Data</h2>
               <p className="text-gray-600">
@@ -78,7 +78,7 @@ export default function App() {
           <div className="mb-12">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-full mb-4">
-                <span className="text-2xl">🔮</span>
+                <span className="text-lg">🔮</span>
               </div>
               <h2 className="text-2xl font-semibold text-gray-900 mb-2">Step 3: Generate Forecast</h2>
               <p className="text-gray-600">
@@ -122,7 +122,7 @@ export default function App() {
           <div className="mb-12">
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-emerald-100 rounded-full mb-4">
-                <span className="text-2xl">📈</span>
+                <span className="text-lg">📈</span>
               </div>
               <h2 className="text-2xl font-semibold text-gray-900 mb-2">Step 4: Your Forecast Results</h2>
               <p className="text-gray-600">

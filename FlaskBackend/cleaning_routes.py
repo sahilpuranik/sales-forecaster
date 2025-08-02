@@ -43,9 +43,12 @@ class CleanResource(MethodView):
 
         # 3. Clean the uploaded CSV
         try:
-            df = clean_data(file)  # Returns cleaned DataFrame with 'ds' and 'y'
+            # Read the uploaded file into a DataFrame first
+            df = pd.read_csv(file)
+            # Then clean it using our function
+            cleaned_df = clean_data(df)
         except Exception as e:
             abort(400, message=f"Could not process file: {str(e)}")
 
         # 4. Return first few rows for preview
-        return df.head().to_dict("records")
+        return cleaned_df.head().to_dict("records")

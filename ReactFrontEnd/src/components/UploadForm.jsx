@@ -117,7 +117,7 @@ export default function UploadForm({ onPreview }) {
               </>
             ) : (
               <>
-                <span className="mr-2">🔍</span>
+                <span className="mr-2 text-base">🔍</span>
                 Analyze & Clean Data
               </>
             )}

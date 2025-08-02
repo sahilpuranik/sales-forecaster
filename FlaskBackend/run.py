@@ -1,5 +1,5 @@
 #Entry point for Flask
-from flask import Flask
+from flask import Flask, jsonify
 from flask_smorest import Api
 from flask_cors import CORS
 
@@ -26,6 +26,20 @@ def create_app() -> Flask:
     api = Api(app)
     api.register_blueprint(cleaning_blp)
     api.register_blueprint(forecast_blp)
+    
+    # Add a simple health check endpoint
+    @app.route("/")
+    def health_check():
+        return jsonify({
+            "status": "healthy",
+            "message": "Sales Forecaster API is running",
+            "endpoints": {
+                "docs": "/docs",
+                "clean": "/clean",
+                "forecast": "/forecast"
+            }
+        })
+    
     return app
 
 
