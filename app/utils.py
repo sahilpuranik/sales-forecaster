@@ -1,33 +1,32 @@
+import pandas as pd
+import numpy as np
 from typing import Literal
-from pandas import DataFrame
-import warnings
 
-from App.config import ABSOLUTE_MIN, SMALL_MAX
-
-def detect_seasonality(df: DataFrame, lag: int = 7, threshold: float = 0.3) -> bool:
-    # Check if there's a weekly pattern in sales (like spikes every Sunday)
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")
-        return df["y"].autocorr(lag=lag) > threshold
-
-def select_model(df: DataFrame) -> Literal["linear", "prophet"]:
-    """
-    Pick the right model based on how much data we have and if there's a pattern.
+def detect_seasonality(df):
+    """Check if data has weekly patterns by looking at day-of-week sales"""
+    df_copy = df.copy()
+    df_copy['ds'] = pd.to_datetime(df_copy['ds'])
+    df_copy['day_of_week'] = df_copy['ds'].dt.dayofweek
     
-    - Not enough rows? Stop and warn.
-    - Small dataset? Use simple model unless there's a clear pattern.
-    - Bigger dataset? Use fancy model.
-    """
-    num_rows = len(df)
+    # Calculate average sales for each day of the week
+    daily_avg = df_copy.groupby('day_of_week')['y'].mean()
+    
+    # If there's significant variation between days, it's seasonal
+    variation = daily_avg.std() / daily_avg.mean()
+    return variation > 0.2
 
-    if num_rows < ABSOLUTE_MIN:
-        raise ValueError(f"Too little data to forecast — please upload at least {ABSOLUTE_MIN} rows.")
-
-    if num_rows <= SMALL_MAX:
-        # For small files, check for repeating patterns
-        if detect_seasonality(df):
-            return "prophet"
-        else:
-            return "linear"
-    else:
+def select_model(df, model_choice):
+    """Choose which forecasting model to use based on data and user choice"""
+    if model_choice != "auto":
+        return model_choice
+    
+    # For small datasets, use linear regression
+    if len(df) < 30:
+        return "linear"
+    
+    # For seasonal data, use Prophet
+    if detect_seasonality(df):
         return "prophet"
+    
+    # Default to linear regression for simplicity
+    return "linear"

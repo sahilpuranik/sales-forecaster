@@ -1,20 +1,24 @@
-from marshmallow import Schema, fields, ValidationError
-from flask_smorest import Blueprint
+from marshmallow import Schema, fields
 
-# Schema for file upload requests
 class CleanRequestSchema(Schema):
-    file = fields.Raw(required=True, description="CSV file to clean")
+    file = fields.Raw(required=True, metadata={"description": "CSV file to clean"})
 
-# Schema for cleaned data response
 class CleanResponseSchema(Schema):
-    ds = fields.Date(required=True, description="Date")
-    y = fields.Float(required=True, description="Sales amount")
+    success = fields.Boolean(required=True)
+    data = fields.List(fields.Dict(), required=True)
+    message = fields.String(required=True)
+    quality_issues = fields.List(fields.String())
+    data_insights = fields.Dict()
+    pattern_insights = fields.Dict()
 
-# Schema for forecast requests
 class ForecastRequestSchema(Schema):
-    data = fields.List(fields.Dict(), required=True, description="Cleaned data array")
+    data = fields.List(fields.Dict(), required=True, metadata={"description": "Cleaned data for forecasting"})
+    model = fields.String(metadata={"description": "Model to use (auto, linear, prophet)"})
+    periods = fields.Integer(metadata={"description": "Number of periods to forecast"})
 
-# Schema for forecast response
 class ForecastResponseSchema(Schema):
-    forecast = fields.List(fields.Dict(), required=True, description="Forecast results")
-    low_confidence = fields.Boolean(required=True, description="Whether forecast has low confidence")
+    success = fields.Boolean(required=True)
+    forecast = fields.List(fields.Dict(), required=True)
+    message = fields.String(required=True)
+    insights = fields.Dict()
+    warning = fields.String()

@@ -2,53 +2,105 @@
 Blueprint handling the /clean endpoint for CSV file uploads and cleaning.
 """
 
-from flask.views import MethodView
-from flask_smorest import Blueprint, abort
-from werkzeug.datastructures import FileStorage
 import pandas as pd
-
-# Schemas
-from schemas import CleanRequestSchema, CleanResponseSchema
-
-# Data cleaning logic
+import io
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from App.preprocess import clean_data
+from flask import Blueprint, request, jsonify
+from App.preprocess import clean_data, validate_data_quality, get_data_insights
 
-# Blueprint
-blp = Blueprint(
-    "cleaning",
-    __name__,
-    url_prefix="/",
-    description="CSV cleaning endpoint",
-)
+cleaning_bp = Blueprint("cleaning", __name__)
 
+def validate_file_size(file):
+    """Check if file size is reasonable"""
+    file.seek(0, 2)  # Go to end of file
+    size = file.tell()
+    file.seek(0)  # Go back to start
+    
+    if size > 10 * 1024 * 1024:  # 10MB limit
+        return False
+    return True
 
-@blp.route("/clean", methods=["POST"])
-class CleanResource(MethodView):
-    """POST /clean – Accepts a raw CSV file, cleans it, and returns preview"""
+def validate_csv_structure(file):
+    """Check if file looks like a CSV with sales data"""
+    try:
+        # Read first few lines to check structure
+        content = file.read(1024).decode('utf-8')
+        file.seek(0)
+        
+        lines = content.split('\n')
+        if len(lines) < 2:
+            return False
+        
+        # Check if it has comma-separated values
+        first_line = lines[0]
+        if ',' not in first_line:
+            return False
+        
+        return True
+    except:
+        return False
 
-    @blp.arguments(CleanRequestSchema, location="files")
-    @blp.response(200, CleanResponseSchema(many=True))
-    def post(self, args):
-        # 1. Extract file from validated args
-        file = args.get("file")
-        if file is None:
-            abort(400, message="No file uploaded. Attach it using 'file' field.")
-
-        # 2. Basic file extension check
-        if not file.filename.endswith(".csv"):
-            abort(400, message="Only .csv files are supported.")
-
-        # 3. Clean the uploaded CSV
-        try:
-            # Read the uploaded file into a DataFrame first
-            df = pd.read_csv(file)
-            # Then clean it using our function
-            cleaned_df = clean_data(df)
-        except Exception as e:
-            abort(400, message=f"Could not process file: {str(e)}")
-
-        # 4. Return first few rows for preview
-        return cleaned_df.head().to_dict("records")
+@cleaning_bp.route("/", methods=["POST"])
+def clean_csv():
+    """Clean and validate uploaded CSV file"""
+    
+    if 'file' not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        return jsonify({"error": "No file selected"}), 400
+    
+    if not file.filename.lower().endswith('.csv'):
+        return jsonify({"error": "File must be a CSV"}), 400
+    
+    # Validate file size
+    if not validate_file_size(file):
+        return jsonify({"error": "File too large (max 10MB)"}), 400
+    
+    # Validate CSV structure
+    if not validate_csv_structure(file):
+        return jsonify({"error": "Invalid CSV format"}), 400
+    
+    try:
+        # Read CSV file
+        df = pd.read_csv(file)
+        
+        if len(df) == 0:
+            return jsonify({"error": "CSV file is empty"}), 400
+        
+        # Clean the data
+        cleaned_df = clean_data(df)
+        
+        # Get data quality information
+        quality_info = validate_data_quality(cleaned_df)
+        pattern_info = get_data_insights(cleaned_df)
+        
+        # Convert to list of dictionaries for JSON response
+        data_list = []
+        for _, row in cleaned_df.iterrows():
+            data_dict = {
+                'ds': row['ds'].strftime('%Y-%m-%d'),
+                'y': float(row['y']),
+                '_quality_issues': quality_info['issues'],
+                '_data_insights': quality_info['insights'],
+                '_pattern_insights': pattern_info
+            }
+            data_list.append(data_dict)
+        
+        return jsonify({
+            "success": True,
+            "data": data_list,
+            "message": f"Successfully cleaned {len(data_list)} rows of data",
+            "quality_issues": quality_info['issues'],
+            "data_insights": quality_info['insights'],
+            "pattern_insights": pattern_info
+        })
+        
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        return jsonify({"error": f"Error processing file: {str(e)}"}), 500

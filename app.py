@@ -7,80 +7,76 @@ with a single command:
 """
 from __future__ import annotations
 
-import os
-import signal
 import subprocess
 import sys
-from pathlib import Path
+import os
+import time
+import requests
 
-ROOT = Path(__file__).resolve().parent
-BACKEND_DIR = ROOT / "FlaskBackend"
-FRONTEND_DIR = ROOT / "ReactFrontEnd"
-VENV_DIR = ROOT / "venv"          # top-level venv (optional)
+def start_backend():
+    """Start the Flask backend server"""
+    print("Starting Flask backend...")
+    backend_process = subprocess.Popen([
+        sys.executable, "FlaskBackend/run.py"
+    ])
+    return backend_process
 
-# --------------------------------------------------------------------------- #
-# Helper: pick the Python binary inside venv if it exists
-# --------------------------------------------------------------------------- #
-def python_from_venv(venv: Path) -> str | None:
-    for rel in ("bin/python", "Scripts/python.exe"):   # mac/linux / windows
-        candidate = venv / rel
-        if candidate.exists():
-            return str(candidate)
-    return None
+def start_frontend():
+    """Start the React frontend development server"""
+    print("Starting React frontend...")
+    os.chdir("ReactFrontEnd")
+    frontend_process = subprocess.Popen([
+        "npm", "run", "dev"
+    ])
+    os.chdir("..")
+    return frontend_process
 
+def wait_for_backend():
+    """Wait for backend to be ready"""
+    print("Waiting for backend to start...")
+    for i in range(30):
+        try:
+            response = requests.get("http://localhost:5001/health", timeout=1)
+            if response.status_code == 200:
+                print("Backend is ready!")
+                return True
+        except:
+            pass
+        time.sleep(1)
+    return False
 
-def main() -> None:
-    python_exe = sys.executable  # Use system Python instead of venv
-
-    backend_cmd = [python_exe, "run.py"]
-    frontend_cmd = ["npm", "run", "dev", "--prefix", str(FRONTEND_DIR)]
-
-    print("🚀  Launching SalesForecaster dev stack")
-    print("  • BACKEND :", ' '.join(backend_cmd))
-    print("  • FRONTEND:", ' '.join(frontend_cmd))
-    print("  (Press Ctrl-C once to stop both)\n")
-
-    processes: list[subprocess.Popen] = []
-
+def main():
+    print("Starting Sales Forecasting Application...")
+    
+    # Start backend
+    backend_process = start_backend()
+    
+    # Wait for backend to be ready
+    if not wait_for_backend():
+        print("Backend failed to start. Stopping...")
+        backend_process.terminate()
+        return
+    
+    # Start frontend
+    frontend_process = start_frontend()
+    
+    print("\n" + "="*50)
+    print("Sales Forecasting App is running!")
+    print("Frontend: http://localhost:3000")
+    print("Backend API: http://localhost:5001")
+    print("API Docs: http://localhost:5001/docs")
+    print("="*50)
+    print("\nPress Ctrl+C to stop both servers")
+    
     try:
-        # Start Flask
-        processes.append(
-            subprocess.Popen(
-                backend_cmd,
-                cwd=BACKEND_DIR,
-                env={**os.environ, "PYTHONPATH": str(ROOT)},  # ensure App/ is importable
-            )
-        )
-
-        # Start Vite
-        processes.append(
-            subprocess.Popen(
-                frontend_cmd,
-                cwd=ROOT,    # npm --prefix handles path
-            )
-        )
-
-        # Wait for Ctrl-C or for either process to exit
+        # Keep the main process running
         while True:
-            for p in processes:
-                if p.poll() is not None:            # one process exited
-                    raise RuntimeError(
-                        f"Process {p.args[0]} terminated with code {p.returncode}"
-                    )
-            signal.pause()                          # idle until signal
-    except (KeyboardInterrupt, RuntimeError):
-        print("\n🛑  Shutting down…")
-        for p in processes:
-            if p.poll() is None:                    # still running
-                p.send_signal(signal.SIGINT)
-        for p in processes:
-            try:
-                p.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                p.kill()
-    finally:
-        print("✅  Dev stack stopped.")
-
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("\nStopping servers...")
+        backend_process.terminate()
+        frontend_process.terminate()
+        print("Servers stopped.")
 
 if __name__ == "__main__":
     main()
